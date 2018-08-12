@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Search_MainWindow</class>
+ <widget class="QMainWindow" name="Search_MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>592</width>
+    <height>372</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>600</width>
+    <height>750</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Search</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="gridLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>-20</y>
+      <width>551</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="2">
+      <widget class="QComboBox" name="NameType_comboBox">
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <item>
+        <property name="text">
+         <string>Name</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Type</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="Search_LineEdit"/>
+     </item>
+     <item row="0" column="3">
+      <widget class="QPushButton" name="Search_PushButton">
+       <property name="font">
+        <font>
+         <family>MS Shell Dlg 2</family>
+         <pointsize>10</pointsize>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <property name="text">
+        <string>Search</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QTableView" name="SearchDis_TableView">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>40</y>
+      <width>551</width>
+      <height>301</height>
+     </rect>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>592</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="Account_Menu">
+    <property name="title">
+     <string>Account</string>
+    </property>
+    <addaction name="UpdateInfo_Action"/>
+   </widget>
+   <addaction name="Account_Menu"/>
+  </widget>
+  <action name="UpdateInfo_Action">
+   <property name="text">
+    <string>UpdateInfo</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

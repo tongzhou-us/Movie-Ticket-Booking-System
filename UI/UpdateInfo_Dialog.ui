@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>UpdateInfo_Dialog</class>
+ <widget class="QDialog" name="UpdateInfo_Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>454</width>
+    <height>346</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>UpdateInfo</string>
+  </property>
+  <widget class="QLabel" name="UpdateInfo_Label">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>20</y>
+     <width>221</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+   </property>
+   <property name="text">
+    <string>Update Personal Infomation</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="gridLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>50</y>
+     <width>361</width>
+     <height>221</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="1" column="0">
+     <widget class="QLabel" name="UpdateFirstName_Label">
+      <property name="text">
+       <string>First Name：</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="UpdateUserName_Label">
+      <property name="text">
+       <string>User Name:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="0">
+     <widget class="QLabel" name="UpdateEmail_Label">
+      <property name="text">
+       <string>Email:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QLabel" name="UpdatePwd_Label">
+      <property name="text">
+       <string>Password:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0">
+     <widget class="QLabel" name="UpdateHomePhone_Label">
+      <property name="text">
+       <string>Home Phone:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="UpdateUserName_LineEdit"/>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLineEdit" name="UpdatefirstName_LineEdit"/>
+    </item>
+    <item row="2" column="1">
+     <widget class="QLineEdit" name="UpdateLastName_LineEdit_2"/>
+    </item>
+    <item row="3" column="1">
+     <widget class="QLineEdit" name="UpdatePwd_LineEdit"/>
+    </item>
+    <item row="4" column="1">
+     <widget class="QLineEdit" name="UpdateEmail_LineEdit"/>
+    </item>
+    <item row="5" column="1">
+     <widget class="QLineEdit" name="UpdateHomePhone_LineEdit"/>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="UpdateLastName_Label">
+      <property name="text">
+       <string>Last Name:</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QPushButton" name="Update_PushButton">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>290</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Update</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="Cancel_PushButton">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>290</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Cancel</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
