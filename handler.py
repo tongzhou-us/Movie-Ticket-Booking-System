@@ -20,8 +20,16 @@ def handler(receive,database):
         return UpdAcc(receive,database)
     elif action == 'Search' and isOnline(receive['user'],database):
         return Search(receive,database)
+    elif action == 'MovieInfo' and isOnline(receive['user'],database):
+        return MovieInfo(receive,database)
+    elif action == 'UpdAccount' and isOnline(receive['user'],database):
+        return UpdAccount(receive,database)
     elif action == 'DisShow' and isOnline(receive['user'],database):
         return DisShow(receive,database)
+    elif action == 'DisSeat' and isOnline(receive['user'],database):
+        return DisSeat(receive,database)
+    elif action == 'UpdSeat' and isOnline(receive['user'],database):
+        return UpdSeat(receive,database)
     elif action == 'MakeRes' and isOnline(receive['user'],database):
         return MakeRes(receive,database)
     elif action == 'Pay' and isOnline(receive['user'],database):
@@ -197,18 +205,26 @@ def Search(receive,database):
             return send
         for movie in movies:
             try:
-                cur.execute("SELECT Cinema.Cinemaname FROM Show INNER JOIN Cinema ON Show.Cinemaid = Cinema.Cinemaid WHERE Show.Movieid = ?",(movie[0],))
-                cname = cur.fetchone()
-                case = {
+                cur.execute("SELECT Cinema.Cinemaname, Show.Showtime, Show.Screenid, Show.Showid FROM Show INNER JOIN Cinema ON Show.Cinemaid = Cinema.Cinemaid WHERE Show.Movieid = ?",(movie[0],))
+                shows = cur.fetchall()
+                for show in shows:
+                    case = {
                     'movie' : movie[1],
-                    'cinema' : cname[0]
-                }
+                    'cinema' : show[0],
+                    'showtime' : show[1],
+                    'screen' : show[2],
+                    'sid' : show[3]
+                    }
+                    content.insert(len(content)+1,case)
             except:
                 case = {
                     'movie' : movie[1],
-                    'cinema' : None
+                    'cinema' : None,
+                    'showtime' : None,
+                    'screen' : None,
+                    'sid' : None
                 }
-            content.insert(len(content)+1, case)
+                content.insert(len(content)+1, case)
         send = {
             'Action' : 'Search',
             'flag' : True,
@@ -261,6 +277,54 @@ receive message json format:
     'text' : 'keyword'
 }
 '''
+
+def DisSeat(receive,database):
+    c1 = database.cursor()
+    try:
+        c1.execute("SELECT Row0, Row1, Row2, Row3, Row4 FROM Show WHERE Showid = ?",(receive['sid'],))
+        smap = c1.fetchone()
+        send = {
+            'Action' : 'DisSeat',
+            'flag' : True,
+            'sid' : receive['sid'],
+            'r0' : smap[0],
+            'r1' : smap[1],
+            'r2' : smap[2],
+            'r3' : smap[3],
+            'r4' : smap[4]
+        }
+        return send
+    except:
+        send = {
+            'Action' : 'DisSeat',
+            'flag' : False,
+            'sid' : receive['sid'],
+            'r0' : None,
+            'r1' : None,
+            'r2' : None,
+            'r3' : None,
+            'r4' : None
+        }
+        return send
+
+def UpdSeat(receive,database):
+    c1 = database.cursor()
+    try:
+        c1.execute("UPDATE Show SET Row0 = ?, Row1 = ?, Row2 = ?, Row3 = ?, Row4 = ? WHERE Showid = ?",
+            (receive['r0'],receive['r1'],receive['r2'],receive['r3'],receive['r4'],receive['sid'],))
+        database.commit()
+        send = {
+            'Action' : 'UpdSeat',
+            'flag' : True
+        }
+        return send
+    except:
+        send = {
+            "Action" : 'UpdSeat',
+            'flag' : False
+        }
+        return send
+
 def DisShow(receive,database):
     c1 = database.cursor()
     content = []
@@ -455,9 +519,46 @@ def CancRes(receive,database):
     return send
 
 
+def MovieInfo(receive, database):
+    c1 = database.cursor()
+    try:
+        c1.execute("SELECT Type, Description, Actors FROM Movie WHERE Name = ?",(receive['moviename'],))
+        info = c1.fetchone()
+        print(info)
+        send = {
+            'Action' : 'MovieInfo',
+            'flag' : True,
+            'type' : info[0],
+            'description' : info[1],
+            'actors' : info[2]
+        }
+        return send
+    except:
+        send = {
+            'Action' : 'MovieInfo',
+            'flag' : False,
+            'type' : None,
+            'description' : None,
+            'actors' : None
+        }
 
-
-
+def UpdAccount(receive, database):
+    c1 = database.cursor()
+    try:
+        cur.execute("UPDATE Customer SET Firstname = ?, Lastname = ?, Email = ?, Phone = ?, Password = ? WHERE Username = ?",
+            (receive['firstname'], receive['lastname'], receive['email'], receive['phone'], receive['password'], receive['username'],))
+        database.commit()
+        send = {
+            'Action' : 'UpdAccount',
+            'flag' : True
+        }
+        return send
+    except:
+        send = {
+            'Action' : 'UpdAccount',
+            'flag' : False
+        }
+        return send
 
 
 

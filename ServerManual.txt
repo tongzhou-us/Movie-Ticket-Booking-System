@@ -1,0 +1,297 @@
+###INTRODUCE###
+Project      : Movie ticket booking management system
+Team#        : 3
+Manual target: System server request and response format.
+About        : This system uses JSON format to communicaiton. Dictionary 
+               object will dumps() to JSON format, then send. and receive 
+               package is also JSON format, need to call loads() to translate
+               to dictionary format for accessing.
+Host         : Localhost.
+Port#        : 6666
+-------------------------------------------------------------------------------
+###JSON Format###
+NOTE: all format are dictionary format before json.dumps().
+A. Guest Mode:
+    User as guest can do 3 actions: Loging(), Signup() or Quit().
+    1. Login():
+        1. Format for sending to server:
+            data = {
+                'Action'   : 'Login',
+                'username' : 'XXX',
+                'password' : 'XXX'
+            }
+        2. Format for receiving from server:
+            data = {
+                'Action' : 'Login',
+                'flag'   : Flag,     #Flag can be True or False, a boolean.
+                'note'   : Note,     #If False, Show Fail reason.
+                'user'   : User      #True: return sername; False: None.
+            }
+    2.Signup():
+        1. Format for sending to server:
+            data = {
+                'Action'    : 'Signup',  
+                'username'  : 'XXX',    #Required
+                'password'  : 'XXX',    #Required    
+                'firstname' : 'XXX',    #Optional
+                'lastname'  : 'XXX',    #Optional
+                'email'     : 'XXX',    #Optional
+                'phone'     : 'XXX'     #Optional
+            }
+        2. Format for receiving from server:
+            data = {
+                'Action' : 'Signup',
+                'flag'   : Flag     #True: Signup successful, False: failed. 
+            }
+    3.Quit():
+        1. Format for sending to server:
+            data = {
+                'Action' : 'Quit'
+            }
+        2. Format for receiving from server:
+            No response from server. window shut down.
+B. Login mode:
+    1. ReqAcc():       #Request account information(manage account).
+        1. Format for sending to server:
+            data = {
+                'Action' : 'ReqAcc',
+                'user' : User,       #User is a global var after logging in.
+                'username' : User    #User can only request his own account
+                                     #information. So same with above.
+            }
+        2. Format for receiving from server:
+            data = {
+                'Action'    : 'ReqAcc',
+                'user'      : User,   #Who ask for requsting account infos.
+                'flag'      : Flag,   #Boolean, True or False.
+                'username'  : User,   #Same with User above.
+                'firstname' : 'XXX',
+                'lastname'  : 'XXX',
+                'email'     : 'XXX',
+                'phone'     : 'XXX'
+            }
+    2. UpdAcc():         #Update account informations(manage account).
+        1. Format for sending to server:
+            data = {
+                'Action'    : 'UpdAcc',
+                'user'      : User,   #Who ask for updating account infos.
+                'flag'      : Flag,   #Same value with ReqAcc(), Don't change.
+                'username'  : User,   #Same with User above.
+                'firstname' : 'XXX',  #New firstname.
+                'lastname'  : 'XXX',  #New lastname.
+                'email'     : 'XXX',  #New email.
+                'phone'     : 'XXX'   #New phone.
+            }
+        2. Format for receiving from server:
+            data = {
+                'Action' : 'UpdAcc',
+                'user'   : User,
+                'flag'   : Flag   #Bool, True: update successful; False: fail.
+            }
+    3. Search():           #Search by different filter and text.
+        1. Format for sending to server:
+            data = {
+                'Action' : 'Search',
+                'user'   : User,
+                'text'   : 'Keyword',  #The search word(str format).
+                'filter' : 'Keyword'   #The search by, can
+                                       #be:'Type' or 'Name' by now.
+            }
+        2. Format for receiving from server:
+            data = {
+                'Action'  : 'Search',
+                'flag'    : Flag,     # No match result will return with False.
+                'content' : Content   # A match results dictionary list.
+            }
+            Content = [
+                {'movie' : 'Movie1', 'cinema' : 'Cinema1', 'showtime' : 'XXXXXXXXXXXX', 'screenid' : X, 'sid' : X},
+                {'movie' : 'Movie2', 'cinema' : 'Cinema2', 'showtime' : 'XXXXXXXXXXXX', 'screenid' : X, 'sid' : X},
+                .
+                .
+                .
+            ]
+
+    3.5 DisSeat():          #Display seat map information.
+        1. Format for sending to server:
+            data = {
+                'Action' : 'DisSeat',
+                'user' : User,
+                'sid'  : X             #Integer, showid.(sid in search result.)
+            }
+        2. Format for receiving from server:
+            data = {
+                'Action' : 'DisSeat',
+                'flag'   : Flag,          #True or False.
+                'sid'    : X,
+                'r0'     : X,             #True: decimal, False: None.
+                'r1'     : X,
+                'r2'     : X,
+                'r3'     : X,
+                'r4'     : X
+            }
+
+    3.75. UpdSeat():
+        1. Format for sending to server:
+            data = {
+                'Action' : 'UpdSeat',
+                'user'   : User,
+                'sid'    : X,
+                'r0'     : X,
+                'r1'     : X,
+                'r2'     : X,
+                'r3'     : X,
+                'r4'     : X
+            }
+        2. Format for receiving from server:
+            data = {
+                'Action' : 'UpdSeat',
+                'flag' : Flag
+            }
+
+    4. DisShow():          #Display show informations.
+        1. Format for sending to server:
+            data = {
+                'Action' : 'DisShow',
+                'user' : User,
+                'text' : 'Keyword',    #Show results by keyword.
+                'filter' : 'Type'      #Can be moviename, showtime, or
+                                       #cinemaname(location).
+            }
+        2. Format for receiving from server:
+            data = {
+                'Action'  : 'DisShow',
+                'flag'    : Flag,
+                'content' : Content
+            }
+            Content = [
+                {
+                    'moviename'  : 'Moviename',
+                    'showtime'   : 'Showtime',       #Example: '201808021630'
+                    'cinemaname' : 'Cinemaname',
+                    'screenid'   : Number,           #Show on different screens
+                    'row0'       : Number,           #A decimal #.
+                    'row1'       : Number,
+                    'row2'       : Number,
+                    'row3'       : Number,
+                    'row4'       : Number
+                },
+                {
+                    'moviename'  : 'Moviename',
+                    'showtime'   : 'Showtime',       #Example: '201808021630'
+                    'cinemaname' : 'Cinemaname',
+                    'screenid'   : Number,           #Show on different screens
+                    'row0'       : Number,           #A decimal #.
+                    'row1'       : Number,
+                    'row2'       : Number,
+                    'row3'       : Number,
+                    'row4'       : Number
+                },
+                .
+                .
+                .
+            ]
+            '''
+            Note: for each cinema, we assume that all showing room have same seat map. from row0 to row4, col0 to col5:
+                 col0 col1 col2 col3 col4 col5        decimal#:
+            row0  0    0    0    0    0    0             0
+            row1  0    0    0    1    0    0             4
+            row2  0    1    1    1    0    0             28
+            row3  0    1    0    0    1    1             3
+            row4  1    0    0    0    0    0             32
+
+            when customer chose seats and make a reservation, they will generate 5 new decimal #, and update to system.
+            For customer exprience: we assume rol0-col0 is seat #1, and rol4-col5 is seat #30.
+            '''
+    5. MakeRes():           #Make a reservation.
+        1. Format for sending to server:
+            data = {
+                'Action'    :'MakeRes',
+                'user'      : User,
+                'username'  : User,          #Same with above.
+                'moviename' : 'XXX',
+                'location'  : 'XXX',         #Could be cinema name.
+                'showtime'  : 'XXXXXXXXXXXX',#Example:'201808021630'
+                'seat'      : 'Number'       #A string type variable.
+            }
+        2. Format for receiving from server:
+            data = {
+                'Action' : 'MakeRes',      
+                'flag' : Flag                #True: committed; False: failed.
+            }
+    6. Logout():
+        1. Format for sending to server:
+            data = {
+                'Action' : 'Logout',
+                'user' : User,
+                'username' : User
+            }
+        2. Format for receiving from server:
+            data = {
+                'Action' : 'Logout',
+                'flag'   : Flag         #If username not in Online table, fail.
+            }
+    7. Pay():
+        1. Format for sending to server:
+            data = {
+                'Action' : 'Pay',
+                'user'   : User,
+                'resid'  : resid     #The Reservation ID that user want to pay.
+            }
+        2. Format for receiving from server:
+            data = {
+                'Action' :'Pay',
+                'flag'   : Flag      #Boolean: True or False.
+            }
+    8. ShowRes():
+        1. Format for sending to server:
+            data = {
+                'Action' : 'ShowRes',
+                'user'   : User      #Show this user's all reservation.
+            }
+        2. Format for receiving from server:
+            data = {
+                'Action'  : 'ShowRes',
+                'flag'    : Flag,           #False: if no matched content
+                'content' : Content
+            }
+            Content = [
+                {
+                    'resid' : ReservationID,
+                    'moviename' : moviename,
+                    'cinemaname' : cinemaname,
+                    'showtime' : 'XXXXXXXXXXXX',
+                    'seat' : 'XX',           # from left-up to right-down: 1-30
+                    'paid' : 'XXX'           # 'YES' or 'NO'
+                },
+                {
+                    ...
+                },
+                ...
+            ]
+    9. CancRes():
+        1. Format for sending to server:
+            data = {
+                'Action' : 'CancRes',
+                'user' : User,
+                'resid' : resid          #INT,Which reservation wants to cancel
+            }
+        2. Format for receiving from server:
+            data = {
+                'Action' : 'CancRes',
+                'flag' : Flag         #BOOLEAN: True or False.
+            }
+
+-------------------------------------------------------------------------------
+I updated Search() format, 3.5. DisSeat() format and 3.75. UpdSeat() format.
+-------
+I added DisSeat()(display seat information for given showid.) and UpdSeat()(update new seat map to database. ).
+-------
+Please check.
+--- Hongchi.
+Aug 12 09:50
+
+
+
+
+
+
