@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Search_MainWindow.ui'
 #
-# Created by: PyQt5 UI code generator 5.11.2
+# Created by: PyQt5 UI code generator 5.10.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -50,10 +50,17 @@ class Ui_Search_MainWindow(object):
         self.gridLayout.addWidget(self.Search_PushButton, 0, 3, 1, 1)
         self.SearchDis_TableView = QtWidgets.QTableView(self.centralwidget)
         self.SearchDis_TableView.setGeometry(QtCore.QRect(20, 40, 551, 301))
+        self.SearchDis_TableView.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
+        self.SearchDis_TableView.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
+        self.SearchDis_TableView.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
+        self.SearchDis_TableView.setSortingEnabled(True)
         self.SearchDis_TableView.setObjectName("SearchDis_TableView")
+        self.SearchDis_TableView.horizontalHeader().setSortIndicatorShown(True)
+        self.SearchDis_TableView.verticalHeader().setVisible(True)
         Search_MainWindow.setCentralWidget(self.centralwidget)
         self.menuBar = QtWidgets.QMenuBar(Search_MainWindow)
-        self.menuBar.setGeometry(QtCore.QRect(0, 0, 592, 23))
+        self.menuBar.setGeometry(QtCore.QRect(0, 0, 592, 22))
+        self.menuBar.setDefaultUp(True)
         self.menuBar.setObjectName("menuBar")
         self.Account_Menu = QtWidgets.QMenu(self.menuBar)
         self.Account_Menu.setObjectName("Account_Menu")

@@ -40,6 +40,9 @@
       <property name="text">
        <string>Signup</string>
       </property>
+      <property name="autoDefault">
+       <bool>false</bool>
+      </property>
      </widget>
     </item>
     <item row="0" column="0">
@@ -71,7 +74,11 @@
      </widget>
     </item>
     <item row="1" column="1" colspan="2">
-     <widget class="QLineEdit" name="Pwd_LineEdit"/>
+     <widget class="QLineEdit" name="Pwd_LineEdit">
+      <property name="clearButtonEnabled">
+       <bool>false</bool>
+      </property>
+     </widget>
     </item>
     <item row="0" column="1" colspan="2">
      <widget class="QLineEdit" name="UserName_LineEdit"/>

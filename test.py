@@ -7,11 +7,10 @@ host = socket.gethostname()
 port = 6666
 clientsocket.connect((host, port))
 
-# if functions.Check_account(clientsocket,'Shrey','12345'):
-	# print("Check_account success!")
+print(functions.Check_account(clientsocket,'Shrey','12345'))
 
-if functions.Add_account(clientsocket, "abd", "abcde"):
-	print("Added account successfully")
+print(functions.Add_account(clientsocket, 'alex', 'pwdalex'))
+
 
 functions.Logout(clientsocket)
 clientsocket.close()

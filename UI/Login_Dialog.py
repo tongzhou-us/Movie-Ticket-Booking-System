@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Login_Dialog.ui'
 #
-# Created by: PyQt5 UI code generator 5.11.2
+# Created by: PyQt5 UI code generator 5.10.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -12,7 +12,7 @@ class Ui_Login_Dialog(object):
     def setupUi(self, Login_Dialog):
         Login_Dialog.setObjectName("Login_Dialog")
         Login_Dialog.resize(280, 150)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(Login_Dialog.sizePolicy().hasHeightForWidth())
@@ -25,6 +25,7 @@ class Ui_Login_Dialog(object):
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
         self.gridLayout.setObjectName("gridLayout")
         self.Signup_PushButton = QtWidgets.QPushButton(self.gridLayoutWidget)
+        self.Signup_PushButton.setAutoDefault(False)
         self.Signup_PushButton.setObjectName("Signup_PushButton")
         self.gridLayout.addWidget(self.Signup_PushButton, 3, 0, 1, 1)
         self.Username_Label = QtWidgets.QLabel(self.gridLayoutWidget)
@@ -40,6 +41,7 @@ class Ui_Login_Dialog(object):
         self.Login_PushButton.setObjectName("Login_PushButton")
         self.gridLayout.addWidget(self.Login_PushButton, 3, 1, 1, 1)
         self.Pwd_LineEdit = QtWidgets.QLineEdit(self.gridLayoutWidget)
+        self.Pwd_LineEdit.setClearButtonEnabled(False)
         self.Pwd_LineEdit.setObjectName("Pwd_LineEdit")
         self.gridLayout.addWidget(self.Pwd_LineEdit, 1, 1, 1, 2)
         self.UserName_LineEdit = QtWidgets.QLineEdit(self.gridLayoutWidget)

@@ -2,7 +2,7 @@ import functions
 import sys
 import socket 
 
-from PyQt5.QtWidgets import QDialog, QApplication, QMainWindow, QMessageBox
+from PyQt5.QtWidgets import QDialog, QApplication, QMainWindow, QMessageBox, QHeaderView
 from PyQt5 import QtGui
 
 from UI.Search_MainWindow import Ui_Search_MainWindow
@@ -33,20 +33,13 @@ class Login_Dialog(QDialog):
         self.ui.Login_PushButton.clicked.connect(lambda: self.account_check(self.username, self.passwrd))
 
     def account_check(self, username, passwrd):
-        # clientsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
-        # host = socket.gethostname() 
-        # port = 6666
-        # clientsocket.connect((host, port))
         global clientsocket
         account_check_output = functions.Check_account(clientsocket, str(username), str(passwrd))
 
-        # functions.Logout(clientsocket)
-        # clientsocket.close()
-
         if account_check_output:
-            # self.next_window = Search_MainWindow(self.username)
-            # self.next_window.show()
-            print("showing main window")
+            self.next_window = Search_MainWindow(self.username)
+            self.next_window.show()
+            self.close()
         else:
             QMessageBox.about(self,"Error", "Username/Password incorrect!")
             
@@ -65,117 +58,112 @@ class Signup_Dialog(QDialog):
         self.ui.Create_PushButton.clicked.connect(self.signup)
 
     def signup(self): 
-        username = self.ui.YourName_LineEdit.text()
-        passwrd = self.ui.CreatPass_LineEdit.text()
+        global clientsocket
+        self.username = self.ui.YourName_LineEdit.text()
+        self.passwrd = self.ui.CreatPass_LineEdit.text()
         re_passwrd = self.ui.Reenterpwd_LineEdit.text()
 
-        if passwrd != re_passwrd:
+        if self.passwrd != re_passwrd:
             QMessageBox.about(self, "Error", "Passwords must match!")
-        elif username and passwrd and re_passwrd:
-                self.update_account(username, passwrd)
-                self.close
-                self.return_login()
+        elif self.username and self.passwrd and re_passwrd:
+            if functions.Add_account(clientsocket, str(self.username), str(self.passwrd)):
+                QMessageBox.about(self, "Success", "Account created successfully! Please login to continue.")
+                self.close()
+            else:
+                QMessageBox.about(self,"Error", "Something went wrong when creating account. Please try again.")
         else:
             QMessageBox.about(self,"Error", "Username and passwords must be filled!")
-
-    def update_account(self, username, passwrd):
-        # clientsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
-        # host = socket.gethostname() 
-        # port = 6666
-        # clientsocket.connect((host, port))
-        global clientsocket
-        add_account_output = functions.Add_account(clientsocket, str(username), str(passwrd))
-
-        # clientsocket.close()
-
-        if add_account_output:
-            QMessageBox.about(self, "Success", "Account created successfully!")
-            self.return_login()
-            self.close
-        else:
-            QMessageBox.about(self,"Error", "Something went wrong when creating account. Please try again.")
     
     def return_login(self):
         self.return_dialog = Login_Dialog()
         self.return_dialog.show()
 
-# class Search_MainWindow(QMainWindow):
-#     def __init__(self, username):
-#         super(Search_MainWindow, self).__init__()
-#         self.ui = Ui_Search_MainWindow()
-#         self.ui.setupUi(self)
-#         self.username = username
+class Search_MainWindow(QMainWindow):
+    def __init__(self, username):
+        super(Search_MainWindow, self).__init__()
+        self.ui = Ui_Search_MainWindow()
+        self.ui.setupUi(self)
+        self.username = username
         
-        # self.main()
+        self.main()
 
-#     def main(self):
-#         #set up new QStandardItemModel item to store data 
-#         self.tablemodel = QtGui.QStandardItemModel(self)
-#         self.tablemodel.setHorizontalHeaderLabels(
-#             ["Name", "Cinema", "Location", "Screen", "Showtime"])
+    def main(self):
+        self.tablemodel = QtGui.QStandardItemModel(self)
+        self.tablemodel.setHorizontalHeaderLabels(
+            ["Name", "Cinema", "Showtime", "Screen"])
        
-#         self.ui.Search_PushButton.clicked.connect(self.Movie_info)
-#         self.ui.UpdateInfo_Action.triggered.connect(self.update_info(self.username))
-#         self.ui.SearchDis_TableView.doubleClicked.connect(self.show_movie_info)
+        self.ui.Search_PushButton.clicked.connect(self.search_content)
+        self.ui.UpdateInfo_Action.triggered.connect(self.update_info)
+        self.ui.SearchDis_TableView.doubleClicked.connect(self.show_movie_info)
 
-#     def searchContent(self):
-#         type = self.ui.NameType_comboBox.currentText()
-#         search_content = self.ui.Search_LineEdit.text()
-#         if type == 'Name':
-#             # TODO: search by name and show on table_view
-#         if type == 'Type':
-#             # TODO: search by type and show on tableview
+    def search_content(self):
+        global clientsocket
+        search_type = self.ui.NameType_comboBox.currentText()
+        search_content = self.ui.Search_LineEdit.text()
+        if search_type == 'Name':
+            search_result = functions.Search_name(clientsocket, str(search_content))
+            print(search_result)
+        if search_type == 'Type':
+            search_result = functions.Search_type(clientsocket, str(search_content))
+            print(search_result)
+        if search_result:
+            for row, movie_info in enumerate(search_result):
+                self.tablemodel.setItem(row, 0, QtGui.QStandardItem(movie_info['movie']))
+                self.tablemodel.setItem(row, 1, QtGui.QStandardItem(movie_info['cinema']))
+                self.tablemodel.setItem(row, 2, QtGui.QStandardItem(movie_info['showtime']))
+                self.tablemodel.setItem(row, 3, QtGui.QStandardItem(movie_info['screen']))
 
-#             # get output and put into list
+                # self.tablemodel.item(ro, k).setTextAlignment(QtCore.Qt.AlignCenter)
+        
+            self.ui.SearchDis_TableView.setModel(self.tablemodel)
+            for i in range(4):
+                self.ui.SearchDis_TableView.horizontalHeader().setSectionResizeMode(
+                    i, QHeaderView.ResizeToContents)
 
-#             for k in range(6):
-#                 self.tablemodel.setItem(n, k, QtGui.QStandardItem(row[k]))
-#                 self.tablemodel.item(n, k).setTextAlignment(QtCore.Qt.AlignCenter)
- 
-#         self.ui.SearchDis_TableView.setModel(self.tablemodel)
-#         # for i in range(5):
-#         #     self.ui.DisplayTable.horizontalHeader().setSectionResizeMode(
-#         #         i, QHeaderView.ResizeToContents)
+        else:
+            QMessageBox(self, "Error", "No movies found.")
+        
+        functions.Logout(clientsocket)
 
-#     def update_info(self, username):
-#         self.next_dialog = UpdateInfo_Dialog(username)
-#         self.next_dialog.show()
+    def update_info(self):
+        self.next_dialog = UpdateInfo_Dialog(self.username)
+        self.next_dialog.show()
 
-#     def show_movie_info(self):
-#         # get selected entry's path
-#         index = self.ui.SearchDis_TableView.selectionModel().selectedRows()
-#         if len(index):
-#             movie_name = self.tablemodel.item(index[0].row(), 0).text()            
-#             self.movie_info_dialog(movie_name)
+    def show_movie_info(self):
+        index = self.ui.SearchDis_TableView.selectionModel().selectedRows()
+        if len(index):
+            movie_name = self.tablemodel.item(index[0].row(), 0).text()            
+            self.movie_info_dialog(movie_name)
 
-#     def movie_info_dialog(self, movie_name):
-#         self.next_dialog = MovieInfo_Dialog(movie_name)
-#         self.next_dialog.show()
+    def movie_info_dialog(self, movie_name):
+        print("show movie info dialog")
+        # self.next_dialog = MovieInfo_Dialog(movie_name)
+        # self.next_dialog.show()
 
-# class UpdateInfo_Dialog(QDialog, username):
-#     def __init__(self):
-#         super(UpdateInfo_Dialog, self).__init__()
+class UpdateInfo_Dialog(QDialog):
+    def __init__(self, username):
+        super(UpdateInfo_Dialog, self).__init__()
 
-#         self.ui = Ui_UpdateInfo_Dialog()
-#         self.ui.setupUi(self) 
-#         self.username = username
-#         self.main() 
+        self.ui = Ui_UpdateInfo_Dialog()
+        self.ui.setupUi(self) 
+        self.username = username
+        self.main() 
 
-#     def main(self):
-#         self.ui.Update_PushButton.clicked.connect(self.update_info(self.username))
+    def main(self):
+        self.ui.Update_PushButton.clicked.connect(self.update_info)
     
-#     def update_info(self,username):
-#         old_username = username
-#         new_username = self.ui.UpdateUserName_LineEdit.text()
-#         first_name = self.ui.UpdatefirstName_LineEdit.text()
-#         last_name = self.ui.UpdateLastName_LineEdit.text()
-#         new_passwrd = self.ui.UpdatePwd_LineEdit.text()
-#         new_email = self.ui.UpdateEmail_LineEdit.text()
-#         phone = self.ui.UpdateHomePhone_LineEdit.text() 
+    def update_info(self):
+        old_username = self.username
+        new_username = self.ui.UpdateUserName_LineEdit.text()
+        first_name = self.ui.UpdatefirstName_LineEdit.text()
+        last_name = self.ui.UpdateLastName_LineEdit.text()
+        new_passwrd = self.ui.UpdatePwd_LineEdit.text()
+        new_email = self.ui.UpdateEmail_LineEdit.text()
+        phone = self.ui.UpdateHomePhone_LineEdit.text() 
 
-#         # TODO: update account info
-#         if update_account_info(old_username, new_username, first_name,last_name,new_passwrd, new_email, phone):
-#             QMessageBox(self, 'success', 'Updated account info success!')
+        # TODO: update account info
+        if update_account_info(old_username, new_username, first_name,last_name,new_passwrd, new_email, phone):
+            QMessageBox(self, 'success', 'Updated account info success!')
 
 # class MovieInfo_Dialog(QDialog, movie_name):
 #     def __init__(self):
@@ -194,11 +182,11 @@ class Signup_Dialog(QDialog):
 #         self.tablemodel = QtGui.QStandardItemModel(self)
 #         self.tablemodel.setHorizontalHeaderLabels(["Name", "Type", "Description", "Actors"])
 
-#         # TODO: take the output of get_movie_info and put into list
+#         # # TODO: take the output of get_movie_info and put into list
 
-#             for k in range(6):
-#                 self.tablemodel.setItem(n, k, QtGui.QStandardItem(row[k]))
-#                 self.tablemodel.item(n, k).setTextAlignment(QtCore.Qt.AlignCenter)
+#         #     for k in range(6):
+#         #         self.tablemodel.setItem(n, k, QtGui.QStandardItem(row[k]))
+#         #         self.tablemodel.item(n, k).setTextAlignment(QtCore.Qt.AlignCenter)
  
 #         self.ui.MovieInfoDis_tableView.setModel(self.tablemodel)
        
@@ -273,6 +261,6 @@ if __name__ == '__main__':
     window = Login_Dialog()
     window.show()
 
-
     sys.exit(app.exec_())
+    functions.Logout(clientsocket)
     clientsocket.close()
