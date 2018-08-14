@@ -79,24 +79,11 @@
     <string>Select Payment Method:</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="Continue_PushButton">
-   <property name="geometry">
-    <rect>
-     <x>160</x>
-     <y>180</y>
-     <width>75</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Continue</string>
-   </property>
-  </widget>
   <widget class="QPushButton" name="Cancel_PushButton">
    <property name="geometry">
     <rect>
-     <x>270</x>
-     <y>180</y>
+     <x>210</x>
+     <y>170</y>
      <width>75</width>
      <height>23</height>
     </rect>
