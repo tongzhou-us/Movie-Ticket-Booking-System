@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'SeatMap_Dialog.ui'
 #
-# Created by: PyQt5 UI code generator 5.11.2
+# Created by: PyQt5 UI code generator 5.10.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -20,10 +20,10 @@ class Ui_SeatMap_Dialog(object):
         self.B5_PushButton.setGeometry(QtCore.QRect(210, 190, 31, 23))
         self.B5_PushButton.setText("")
         self.B5_PushButton.setObjectName("B5_PushButton")
-        self.D1_PushButton_2 = QtWidgets.QPushButton(SeatMap_Dialog)
-        self.D1_PushButton_2.setGeometry(QtCore.QRect(40, 90, 31, 23))
-        self.D1_PushButton_2.setText("")
-        self.D1_PushButton_2.setObjectName("D1_PushButton_2")
+        self.D1_PushButton = QtWidgets.QPushButton(SeatMap_Dialog)
+        self.D1_PushButton.setGeometry(QtCore.QRect(40, 90, 31, 23))
+        self.D1_PushButton.setText("")
+        self.D1_PushButton.setObjectName("D1_PushButton")
         self.E5_PushButton = QtWidgets.QPushButton(SeatMap_Dialog)
         self.E5_PushButton.setGeometry(QtCore.QRect(210, 40, 31, 23))
         self.E5_PushButton.setText("")
@@ -87,10 +87,10 @@ class Ui_SeatMap_Dialog(object):
         self.B1_PushButton.setGeometry(QtCore.QRect(40, 190, 31, 23))
         self.B1_PushButton.setText("")
         self.B1_PushButton.setObjectName("B1_PushButton")
-        self.pushButton_56 = QtWidgets.QPushButton(SeatMap_Dialog)
-        self.pushButton_56.setGeometry(QtCore.QRect(170, 90, 31, 23))
-        self.pushButton_56.setText("")
-        self.pushButton_56.setObjectName("pushButton_56")
+        self.D4_PushButton = QtWidgets.QPushButton(SeatMap_Dialog)
+        self.D4_PushButton.setGeometry(QtCore.QRect(170, 90, 31, 23))
+        self.D4_PushButton.setText("")
+        self.D4_PushButton.setObjectName("D4_PushButton")
         self.B2_PushButton = QtWidgets.QPushButton(SeatMap_Dialog)
         self.B2_PushButton.setGeometry(QtCore.QRect(80, 190, 31, 23))
         self.B2_PushButton.setText("")

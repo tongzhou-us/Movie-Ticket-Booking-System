@@ -10,6 +10,11 @@
     <height>346</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <pointsize>14</pointsize>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>UpdateInfo</string>
   </property>
@@ -21,6 +26,15 @@
      <width>221</width>
      <height>16</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>MS Shell Dlg 2</family>
+     <pointsize>12</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
    </property>
    <property name="styleSheet">
     <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
@@ -39,19 +53,8 @@
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="1" column="0">
-     <widget class="QLabel" name="UpdateFirstName_Label">
-      <property name="text">
-       <string>First Name：</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="0">
-     <widget class="QLabel" name="UpdateUserName_Label">
-      <property name="text">
-       <string>User Name:</string>
-      </property>
-     </widget>
+    <item row="1" column="1">
+     <widget class="QLineEdit" name="UpdateLastName_LineEdit"/>
     </item>
     <item row="4" column="0">
      <widget class="QLabel" name="UpdateEmail_Label">
@@ -60,12 +63,35 @@
       </property>
      </widget>
     </item>
-    <item row="3" column="0">
+    <item row="5" column="1">
+     <widget class="QLineEdit" name="UpdateHomePhone_LineEdit"/>
+    </item>
+    <item row="4" column="1">
+     <widget class="QLineEdit" name="UpdateEmail_LineEdit"/>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="UpdateLastName_Label">
+      <property name="text">
+       <string>Last Name:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
      <widget class="QLabel" name="UpdatePwd_Label">
       <property name="text">
        <string>Password:</string>
       </property>
      </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="UpdateFirstName_Label">
+      <property name="text">
+       <string>First Name：</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="UpdatefirstName_LineEdit"/>
     </item>
     <item row="5" column="0">
      <widget class="QLabel" name="UpdateHomePhone_Label">
@@ -74,28 +100,24 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="1">
-     <widget class="QLineEdit" name="UpdateUserName_LineEdit"/>
-    </item>
-    <item row="1" column="1">
-     <widget class="QLineEdit" name="UpdatefirstName_LineEdit"/>
-    </item>
     <item row="2" column="1">
-     <widget class="QLineEdit" name="UpdateLastName_LineEdit"/>
+     <widget class="QLineEdit" name="UpdatePwd_LineEdit">
+      <property name="echoMode">
+       <enum>QLineEdit::Password</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QLabel" name="Update_ConfirmPwd_Label">
+      <property name="text">
+       <string>Confirm Password:</string>
+      </property>
+     </widget>
     </item>
     <item row="3" column="1">
-     <widget class="QLineEdit" name="UpdatePwd_LineEdit"/>
-    </item>
-    <item row="4" column="1">
-     <widget class="QLineEdit" name="UpdateEmail_LineEdit"/>
-    </item>
-    <item row="5" column="1">
-     <widget class="QLineEdit" name="UpdateHomePhone_LineEdit"/>
-    </item>
-    <item row="2" column="0">
-     <widget class="QLabel" name="UpdateLastName_Label">
-      <property name="text">
-       <string>Last Name:</string>
+     <widget class="QLineEdit" name="Update_ConfirmPwd_LineEdit">
+      <property name="echoMode">
+       <enum>QLineEdit::Password</enum>
       </property>
      </widget>
     </item>

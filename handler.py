@@ -546,7 +546,7 @@ def UpdAccount(receive, database):
     c1 = database.cursor()
     try:
         cur.execute("UPDATE Customer SET Firstname = ?, Lastname = ?, Email = ?, Phone = ?, Password = ? WHERE Username = ?",
-            (receive['firstname'], receive['lastname'], receive['email'], receive['phone'], receive['password'], receive['username'],))
+            (receive['firstname'], receive['lastname'], receive['email'], receive['phone'], receive['password'], receive['user'],))
         database.commit()
         send = {
             'Action' : 'UpdAccount',

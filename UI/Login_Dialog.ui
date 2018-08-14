@@ -64,6 +64,9 @@
       <property name="text">
        <string>Cancel</string>
       </property>
+      <property name="autoDefault">
+       <bool>false</bool>
+      </property>
      </widget>
     </item>
     <item row="3" column="1">
@@ -71,10 +74,16 @@
       <property name="text">
        <string>Login</string>
       </property>
+      <property name="autoDefault">
+       <bool>true</bool>
+      </property>
      </widget>
     </item>
     <item row="1" column="1" colspan="2">
      <widget class="QLineEdit" name="Pwd_LineEdit">
+      <property name="echoMode">
+       <enum>QLineEdit::Password</enum>
+      </property>
       <property name="clearButtonEnabled">
        <bool>false</bool>
       </property>
