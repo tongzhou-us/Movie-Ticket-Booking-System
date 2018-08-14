@@ -1,0 +1,7 @@
+<RCC>
+  <qresource prefix="pay">
+    <file>Ali.PNG</file>
+    <file>Payal.PNG</file>
+    <file>Visa.PNG</file>
+  </qresource>
+</RCC>
