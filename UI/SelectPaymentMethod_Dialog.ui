@@ -94,7 +94,7 @@
   </widget>
  </widget>
  <resources>
-  <include location="../Payment/payment.qrc"/>
+  <include location="payment.qrc"/>
  </resources>
  <connections/>
 </ui>

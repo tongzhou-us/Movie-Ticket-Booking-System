@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'SelectPaymentMethod_Dialog.ui'
 #
-# Created by: PyQt5 UI code generator 5.11.2
+# Created by: PyQt5 UI code generator 5.10.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -33,11 +33,8 @@ class Ui_SelectPaymentMethod_Dialog(object):
         font.setPointSize(11)
         self.PaymentMethod_Label.setFont(font)
         self.PaymentMethod_Label.setObjectName("PaymentMethod_Label")
-        self.Continue_PushButton = QtWidgets.QPushButton(SelectPaymentMethod_Dialog)
-        self.Continue_PushButton.setGeometry(QtCore.QRect(160, 180, 75, 23))
-        self.Continue_PushButton.setObjectName("Continue_PushButton")
         self.Cancel_PushButton = QtWidgets.QPushButton(SelectPaymentMethod_Dialog)
-        self.Cancel_PushButton.setGeometry(QtCore.QRect(270, 180, 75, 23))
+        self.Cancel_PushButton.setGeometry(QtCore.QRect(210, 170, 75, 23))
         self.Cancel_PushButton.setObjectName("Cancel_PushButton")
 
         self.retranslateUi(SelectPaymentMethod_Dialog)
@@ -47,5 +44,6 @@ class Ui_SelectPaymentMethod_Dialog(object):
         _translate = QtCore.QCoreApplication.translate
         SelectPaymentMethod_Dialog.setWindowTitle(_translate("SelectPaymentMethod_Dialog", "Payment Method"))
         self.PaymentMethod_Label.setText(_translate("SelectPaymentMethod_Dialog", "Select Payment Method:"))
-        self.Continue_PushButton.setText(_translate("SelectPaymentMethod_Dialog", "Continue"))
         self.Cancel_PushButton.setText(_translate("SelectPaymentMethod_Dialog", "Cancel"))
+
+import payment_rc

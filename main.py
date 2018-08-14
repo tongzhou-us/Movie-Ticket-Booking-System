@@ -222,68 +222,182 @@ class SeatMap_Dialog(QDialog):
     def main(self):
         self.display_seats()
         self.ui.Cancel_PushButton.clicked.connect(self.close)
-        self.ui.Continue_PushButton.clicked.connect(self.payment_dialog)
 
     def display_seats(self):
         # TODO: get seat_dict, read it into seat_list as etc: str(bin(row0))[2:]
         global clientsocket
         check_seat_dict = functions.Check_seat(clientsocket, self.sid) 
-        seat_list = []
-        seat_list.append(str(bin(int(check_seat_dict['r0'])))[2:])
-        seat_list.append(str(bin(int(check_seat_dict['r1'])))[2:])
-        seat_list.append(str(bin(int(check_seat_dict['r2'])))[2:])
-        seat_list.append(str(bin(int(check_seat_dict['r3'])))[2:])
-        seat_list.append(str(bin(int(check_seat_dict['r4'])))[2:])
+        print(check_seat_dict)
+        self.seat_list = []
+        self.seat_list.append(str(bin(int(check_seat_dict['r0'])))[2:])
+        self.seat_list.append(str(bin(int(check_seat_dict['r1'])))[2:])
+        self.seat_list.append(str(bin(int(check_seat_dict['r2'])))[2:])
+        self.seat_list.append(str(bin(int(check_seat_dict['r3'])))[2:])
+        self.seat_list.append(str(bin(int(check_seat_dict['r4'])))[2:])
 
-        functions.Logout(clientsocket)
-
-        seat_disable_dict = {'A1': self.ui.A1_PushButton.setEnabled(False),
-                     'A2': self.ui.A2_PushButton.setEnabled(False),
-                     'A3': self.ui.A3_PushButton.setEnabled(False),
-                     'A4': self.ui.A4_PushButton.setEnabled(False),
-                     'A5': self.ui.A5_PushButton.setEnabled(False),
-                     'A6': self.ui.A6_PushButton.setEnabled(False),
-                     'B1': self.ui.B1_PushButton.setEnabled(False),
-                     'B2': self.ui.B2_PushButton.setEnabled(False),
-                     'B3': self.ui.B3_PushButton.setEnabled(False),
-                     'B4': self.ui.B4_PushButton.setEnabled(False),
-                     'B5': self.ui.B5_PushButton.setEnabled(False),
-                     'B6': self.ui.B6_PushButton.setEnabled(False),
-                     'C1': self.ui.C1_PushButton.setEnabled(False),
-                     'C2': self.ui.C2_PushButton.setEnabled(False),
-                     'C3': self.ui.C3_PushButton.setEnabled(False),
-                     'C4': self.ui.C4_PushButton.setEnabled(False),
-                     'C5': self.ui.C5_PushButton.setEnabled(False),
-                     'C6': self.ui.C6_PushButton.setEnabled(False),
-                     'D1': self.ui.D1_PushButton.setEnabled(False),
-                     'D2': self.ui.D2_PushButton.setEnabled(False),
-                     'D3': self.ui.D3_PushButton.setEnabled(False),
-                     'D4': self.ui.D4_PushButton.setEnabled(False),
-                     'D5': self.ui.D5_PushButton.setEnabled(False),
-                     'D6': self.ui.D6_PushButton.setEnabled(False),
-                     'E1': self.ui.E1_PushButton.setEnabled(False),
-                     'E2': self.ui.E2_PushButton.setEnabled(False),
-                     'E3': self.ui.E3_PushButton.setEnabled(False),
-                     'E4': self.ui.E4_PushButton.setEnabled(False),
-                     'E5': self.ui.E5_PushButton.setEnabled(False),
-                     'E6': self.ui.E6_PushButton.setEnabled(False),
-            }
-
-        for row_index, row in enumerate(seat_list):
+        for row_index, row in enumerate(self.seat_list):
             row_list = [int(d) for d in row]
             column_index = []
             for index, i in enumerate(row_list):
                 if i == 1:
                     column_index.append(index)
+
             for n in column_index:
                 row_alpha = chr(row_index + 65)
-                print(str(row_alpha + str(n+1)))
-                # seat_disable_dict[str(row_alpha + str(n+1))]
+                seat_disabled = str(row_alpha + str(n+1))
+                if seat_disabled == 'A1':
+                    self.ui.A1_PushButton.setEnabled(False)
+                    self.ui.A1_PushButton.setChecked(False)
+                elif seat_disabled == 'A2':
+                    self.ui.A2_PushButton.setEnabled(False)
+                    self.ui.A2_PushButton.setChecked(False)
+                elif seat_disabled == 'A3':
+                    self.ui.A3_PushButton.setEnabled(False)
+                    self.ui.A3_PushButton.setChecked(False)
+                elif seat_disabled == 'A4':
+                    self.ui.A4_PushButton.setEnabled(False)
+                    self.ui.A4_PushButton.setChecked(False)
+                elif seat_disabled == 'A5':
+                    self.ui.A5_PushButton.setEnabled(False)
+                    self.ui.A5_PushButton.setChecked(False)
+                elif seat_disabled == 'A6':
+                    self.ui.A6_PushButton.setEnabled(False)
+                    self.ui.A6_PushButton.setChecked(False)
+                elif seat_disabled == 'B1':
+                    self.ui.B1_PushButton.setEnabled(False)
+                    self.ui.B1_PushButton.setChecked(False)
+                elif seat_disabled == 'B2':
+                    self.ui.B2_PushButton.setEnabled(False)
+                    self.ui.B2_PushButton.setChecked(False)
+                elif seat_disabled == 'B3':
+                    self.ui.B3_PushButton.setEnabled(False)
+                    self.ui.B3_PushButton.setChecked(False)
+                elif seat_disabled == 'B4':
+                    self.ui.B4_PushButton.setEnabled(False)
+                    self.ui.B4_PushButton.setChecked(False)
+                elif seat_disabled == 'B5':
+                    self.ui.B5_PushButton.setEnabled(False)
+                    self.ui.B5_PushButton.setChecked(False)
+                elif seat_disabled == 'B6':
+                    self.ui.B6_PushButton.setEnabled(False)
+                    self.ui.B6_PushButton.setChecked(False)
+                elif seat_disabled == 'C1':
+                    self.ui.C1_PushButton.setEnabled(False)
+                    self.ui.C1_PushButton.setChecked(False)
+                elif seat_disabled == 'C2':
+                    self.ui.C2_PushButton.setEnabled(False)
+                    self.ui.C2_PushButton.setChecked(False)
+                elif seat_disabled == 'C3':
+                    self.ui.C3_PushButton.setEnabled(False)
+                    self.ui.C3_PushButton.setChecked(False)
+                elif seat_disabled == 'C4':
+                    self.ui.C4_PushButton.setEnabled(False)
+                    self.ui.C4_PushButton.setChecked(False)
+                elif seat_disabled == 'C5':
+                    self.ui.C5_PushButton.setEnabled(False)
+                    self.ui.C5_PushButton.setChecked(False)
+                elif seat_disabled == 'C6':
+                    self.ui.C6_PushButton.setEnabled(False)
+                    self.ui.C6_PushButton.setChecked(False)
+                elif seat_disabled == 'D1':
+                    self.ui.D1_PushButton.setEnabled(False)
+                    self.ui.D1_PushButton.setChecked(False)
+                elif seat_disabled == 'D2':
+                    self.ui.D2_PushButton.setEnabled(False)
+                    self.ui.D2_PushButton.setChecked(False)
+                elif seat_disabled == 'D3':
+                    self.ui.D3_PushButton.setEnabled(False)
+                    self.ui.D3_PushButton.setChecked(False)
+                elif seat_disabled == 'D4':
+                    self.ui.D4_PushButton.setEnabled(False)
+                    self.ui.D4_PushButton.setChecked(False)
+                elif seat_disabled == 'D5':
+                    self.ui.D5_PushButton.setEnabled(False)
+                    self.ui.D5_PushButton.setChecked(False)
+                elif seat_disabled == 'D6':
+                    self.ui.D6_PushButton.setEnabled(False)
+                    self.ui.D6_PushButton.setChecked(False)
+                elif seat_disabled == 'E1':
+                    self.ui.E1_PushButton.setEnabled(False)
+                    self.ui.E1_PushButton.setChecked(False)
+                elif seat_disabled == 'E2':
+                    self.ui.E2_PushButton.setEnabled(False)
+                    self.ui.E2_PushButton.setChecked(False)
+                elif seat_disabled == 'E3':
+                    self.ui.E3_PushButton.setEnabled(False)
+                    self.ui.E3_PushButton.setChecked(False)
+                elif seat_disabled == 'E4':
+                    self.ui.E4_PushButton.setEnabled(False)
+                    self.ui.E4_PushButton.setChecked(False)
+                elif seat_disabled == 'E5':
+                    self.ui.E5_PushButton.setEnabled(False)
+                    self.ui.E5_PushButton.setChecked(False)
+                elif seat_disabled == 'E6':
+                    self.ui.E6_PushButton.setEnabled(False)
+                    self.ui.E6_PushButton.setChecked(False)
 
-    def payment_dialog(self):
-        self.next_dialog = Payment_Dialog()
-        self.next_dialog.show()
-        self.close()
+        self.ui.A1_PushButton.clicked.connect(lambda:self.update_seat('A1'))
+        self.ui.A2_PushButton.clicked.connect(lambda:self.update_seat('A2'))
+        self.ui.A3_PushButton.clicked.connect(lambda:self.update_seat('A3'))
+        self.ui.A4_PushButton.clicked.connect(lambda:self.update_seat('A4'))
+        self.ui.A5_PushButton.clicked.connect(lambda:self.update_seat('A5'))
+        self.ui.A6_PushButton.clicked.connect(lambda:self.update_seat('A6'))
+        self.ui.B1_PushButton.clicked.connect(lambda:self.update_seat('B1'))
+        self.ui.B2_PushButton.clicked.connect(lambda:self.update_seat('B2'))
+        self.ui.B3_PushButton.clicked.connect(lambda:self.update_seat('B3'))
+        self.ui.B4_PushButton.clicked.connect(lambda:self.update_seat('B4'))
+        self.ui.B5_PushButton.clicked.connect(lambda:self.update_seat('B5'))
+        self.ui.B6_PushButton.clicked.connect(lambda:self.update_seat('B6'))
+        self.ui.C1_PushButton.clicked.connect(lambda:self.update_seat('C1'))
+        self.ui.C2_PushButton.clicked.connect(lambda:self.update_seat('C2'))
+        self.ui.C3_PushButton.clicked.connect(lambda:self.update_seat('C3'))
+        self.ui.C4_PushButton.clicked.connect(lambda:self.update_seat('C4'))
+        self.ui.C5_PushButton.clicked.connect(lambda:self.update_seat('C5'))
+        self.ui.C6_PushButton.clicked.connect(lambda:self.update_seat('C6'))
+        self.ui.D1_PushButton.clicked.connect(lambda:self.update_seat('D1'))
+        self.ui.D2_PushButton.clicked.connect(lambda:self.update_seat('D2'))
+        self.ui.D3_PushButton.clicked.connect(lambda:self.update_seat('D3'))
+        self.ui.D4_PushButton.clicked.connect(lambda:self.update_seat('D4'))
+        self.ui.D5_PushButton.clicked.connect(lambda:self.update_seat('D5'))
+        self.ui.D6_PushButton.clicked.connect(lambda:self.update_seat('D6'))
+        self.ui.E1_PushButton.clicked.connect(lambda:self.update_seat('E1'))
+        self.ui.E2_PushButton.clicked.connect(lambda:self.update_seat('E2'))
+        self.ui.E3_PushButton.clicked.connect(lambda:self.update_seat('E3'))
+        self.ui.E4_PushButton.clicked.connect(lambda:self.update_seat('E4'))
+        self.ui.E5_PushButton.clicked.connect(lambda:self.update_seat('E5'))
+        self.ui.E6_PushButton.clicked.connect(lambda:self.update_seat('E6'))
+
+    def update_seat(self, selected_seat):
+        self.ui.Continue_PushButton.clicked.connect(lambda:self.update_seat_2(selected_seat))
+
+    def update_seat_2(self, selected_seat):
+        self.ui.selectedseat_Label.setText(selected_seat + " selected.")
+        global clientsocket
+
+        # UPDATE SEAT DO NOT WORK AS OF NOW
+        # new_row = ord(list(selected_seat)[0]) - 65
+        # new_column = int(list(selected_seat)[1])
+
+        # update_column = list(self.seat_list[new_row])
+        # update_column[new_column] = '1'
+        # self.seat_list[new_row] = str(update_column)
+
+        new_seat_dict = {
+            'r0' : str(self.seat_list[0]),
+            'r1' : str(self.seat_list[1]),
+            'r2' : str(self.seat_list[2]),
+            'r3' : str(self.seat_list[3]),
+            'r4' : str(self.seat_list[4])
+        }
+
+        if functions.Update_seat(clientsocket, self.sid, new_seat_dict):
+            QMessageBox.about(self, "success", 'Reserved seat ' + selected_seat + " success. Please complete payment in 15 minutes.")
+            self.next_dialog = Payment_Dialog()
+            self.next_dialog.show()
+            self.close()
+        else:
+            QMessageBox.about(self, "error", "There was an error confirming your seat, please try again!")
+            self.display_seats()
 
 class Payment_Dialog(QDialog):
     def __init__(self):
@@ -307,6 +421,8 @@ class Payment_Dialog(QDialog):
         if method == 'Alipay':
             QMessageBox.about(self, 'info', 'Selected Alipay as Payment Method.')
 
+        functions.Logout(clientsocket)
+
 if __name__ == '__main__':   
     # Setting up socket infomation
     global clientsocket
@@ -321,5 +437,5 @@ if __name__ == '__main__':
     window.show()
 
     sys.exit(app.exec_())
-    functions.Logout(clientsocket)
+    # functions.Logout(clientsocket)
     clientsocket.close()
