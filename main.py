@@ -25,7 +25,7 @@ class Login_Dialog(QDialog):
     def main(self):
         self.ui.Signup_PushButton.clicked.connect(self.signup)
         self.ui.Login_PushButton.clicked.connect(self.login)
-        self.ui.Cancel_PushButton.clicked.connect(self.close)
+        self.ui.Cancel_PushButton.clicked.connect(lambda:self.close())
 
     def login(self):
         self.username = self.ui.UserName_LineEdit.text()
@@ -138,6 +138,7 @@ class Search_MainWindow(QMainWindow):
     def movie_info_dialog(self):
         self.next_dialog = MovieInfo_Dialog(self.movie_name, self.sid)
         self.next_dialog.show()
+        self.close()
 
 class UpdateInfo_Dialog(QDialog):
     def __init__(self, username):
@@ -150,7 +151,7 @@ class UpdateInfo_Dialog(QDialog):
 
     def main(self):
         self.ui.Update_PushButton.clicked.connect(self.update_info)
-        self.ui.Cancel_PushButton.clicked.connect(self.close)
+        self.ui.Cancel_PushButton.clicked.connect(lambda:self.close())
     
     def update_info(self):
         global clientsocket
@@ -183,7 +184,7 @@ class MovieInfo_Dialog(QDialog):
 
     def main(self):
         global clientsocket
-        self.ui.Cancel_PushButton.clicked.connect(self.close)
+        self.ui.Cancel_PushButton.clicked.connect(lambda:self.close())
         self.ui.Continue_PushButton.clicked.connect(self.seat_selection)
 
         self.tablemodel = QtGui.QStandardItemModel(self)
@@ -209,6 +210,7 @@ class MovieInfo_Dialog(QDialog):
     def seat_selection(self):
         self.next_dialog = SeatMap_Dialog(self.sid)
         self.next_dialog.show()
+        self.close()
 
 class SeatMap_Dialog(QDialog):
     def __init__(self, sid):
@@ -221,7 +223,7 @@ class SeatMap_Dialog(QDialog):
 
     def main(self):
         self.display_seats()
-        self.ui.Cancel_PushButton.clicked.connect(self.close)
+        self.ui.Cancel_PushButton.clicked.connect(lambda:self.close())
 
     def display_seats(self):
         # TODO: get seat_dict, read it into seat_list as etc: str(bin(row0))[2:]
@@ -374,7 +376,7 @@ class SeatMap_Dialog(QDialog):
         self.ui.selectedseat_Label.setText(selected_seat + " selected.")
         global clientsocket
 
-        # UPDATE SEAT DO NOT WORK AS OF NOW
+        # UPDATE SEAT DO NOT WORK 
         # new_row = ord(list(selected_seat)[0]) - 65
         # new_column = int(list(selected_seat)[1])
 
@@ -391,10 +393,11 @@ class SeatMap_Dialog(QDialog):
         }
 
         if functions.Update_seat(clientsocket, self.sid, new_seat_dict):
-            QMessageBox.about(self, "success", 'Reserved seat ' + selected_seat + " success. Please complete payment in 15 minutes.")
             self.next_dialog = Payment_Dialog()
             self.next_dialog.show()
             self.close()
+            QMessageBox.about(self, "success", 'Reserved seat ' + selected_seat + " success. Please complete payment in 15 minutes.")
+
         else:
             QMessageBox.about(self, "error", "There was an error confirming your seat, please try again!")
             self.display_seats()
@@ -408,7 +411,7 @@ class Payment_Dialog(QDialog):
         self.main()
 
     def main(self):
-        self.ui.Cancel_PushButton.clicked.connect(self.close)
+        self.ui.Cancel_PushButton.clicked.connect(lambda:self.close())
         self.ui.Visa_PushButton.clicked.connect(lambda:self.showMessage('Visa'))
         self.ui.Alipay_PushButton.clicked.connect(lambda:self.showMessage('Alipay'))
         self.ui.Paypal_PushButton.clicked.connect(lambda:self.showMessage('Paypal'))
